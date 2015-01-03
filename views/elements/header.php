@@ -9,15 +9,17 @@
 <body>
 <header>
     <div class="row">
-        <div class="small-3 columns">
+        <div class="small-6 columns">
             <h1>Project Hours</h1>
         </div>
-        <div class="small-9 columns">
+        <div class="small-6 columns">
             <nav class="top-bar" data-topbar role="navigation">
-               <ul class="right">
-                  <li class="active"><a href="#">New Project</a></li>
-                  <li><a href="">List Projects</a></li>
-                </ul> 
+                <section class="top-bar-section">
+                    <ul class="">
+                      <li class="active"><a href="#">New Project</a></li>
+                      <li><a href="">List Projects</a></li>
+                    </ul>
+                </section>
             </nav>
         </div>
     </div>
