@@ -8,7 +8,21 @@
 
 session_start();//start the session
 
-$view = 'index';
+//include classes
+include_once 'models/Accounts.php';
+$account = new Accounts();
+
+//router
+switch(@$_GET['page']){
+
+case 'register':
+    $view = 'register';
+    break;
+
+default:
+    $view = 'index';
+}
+
 
 //include the view
 include_once "views/{$view}.php";

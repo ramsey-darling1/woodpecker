@@ -1,0 +1,26 @@
+/**
+ * Main stylesheet for project hours app
+ * @rdarling
+ *
+ */
+.brick {
+  clear: both; }
+
+header {
+  margin-bottom: 4rem; }
+
+body {
+  background: #ffffff no-repeat;
+  background: -moz-linear-gradient(45deg, #ffffff 70%, #ef017c 100%) no-repeat;
+  background: -webkit-gradient(linear, left bottom, right top, color-stop(70%, #ffffff), color-stop(100%, #ef017c)) no-repeat;
+  background: -webkit-linear-gradient(45deg, #ffffff 70%, #ef017c 100%) no-repeat;
+  background: -o-linear-gradient(45deg, #ffffff 70%, #ef017c 100%) no-repeat;
+  background: -ms-linear-gradient(45deg, #ffffff 70%, #ef017c 100%) no-repeat;
+  background: linear-gradient(45deg, #ffffff 70%, #ef017c 100%) no-repeat;
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$white', endColorstr='$pink',GradientType=1 ); }
+
+#login form {
+  margin-top: 2rem; }
+
+footer {
+  margin-top: 4rem; }

@@ -4,7 +4,6 @@
  * @rdarling
  *
  */
-session_start();
 
 class Accounts {
     
@@ -15,5 +14,9 @@ class Accounts {
     public function logout(){
         unset($_SESSION['logged_in']);
         return true;
+    }
+
+    public function is_logged_in(){
+        return isset($_SESSION['logged_in']) ? true : false; 
     }
 }

@@ -10,9 +10,11 @@
 <header>
     <div class="row">
         <div class="small-6 columns">
-            <h1>Project Hours</h1>
+            <h1>woodpecker</h1>
+            <p>project hours management</p>
         </div>
         <div class="small-6 columns">
+            <?php if($account->is_logged_in()): ?>
             <nav class="top-bar" data-topbar role="navigation">
                 <section class="top-bar-section">
                     <ul class="">
@@ -21,6 +23,10 @@
                     </ul>
                 </section>
             </nav>
+            <?php endif; ?>
         </div>
     </div>
 </header>
+<div class="row">
+    <div class="small-12 columns"><div class="res-message"></div></div>
+</div>

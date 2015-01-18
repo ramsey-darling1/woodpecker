@@ -1,6 +1,7 @@
 <?php
 /**
  * api for project hours app
+ * Main Controller
  * mostly expecting ajax requests
  * @rdarling
  *
