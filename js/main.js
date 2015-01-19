@@ -5,12 +5,13 @@ $(document).ready(function() {
     var message, username, validate;
     username = $(this).val();
     validate = new ValidateForm;
+    message = new Message;
     if (!validate.correct_length(6, username)) {
-      message = new Message;
       message.display_message('Sorry, that username is not long enough', 'warning');
       return $(this).addClass('error');
     } else {
-      return $(this).removeClass('error');
+      $(this).removeClass('error');
+      return message.remove_message;
     }
   });
 });
@@ -35,6 +36,10 @@ Message = (function() {
 
   Message.prototype.display_message = function(message, type) {
     return $('.res-message').html("<div data-alert class=\"alert-box " + type + " radius\">" + message + "<a href=\"#\" class=\"close\">&times;</a></div>");
+  };
+
+  Message.prototype.remove_message = function() {
+    return $('.res-message').fadeOut();
   };
 
   return Message;

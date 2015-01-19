@@ -19,6 +19,9 @@ body {
   background: linear-gradient(45deg, #ffffff 70%, #ef017c 100%) no-repeat;
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$white', endColorstr='$pink',GradientType=1 ); }
 
+input.error {
+  background: #fe2595; }
+
 #login form {
   margin-top: 2rem; }
 

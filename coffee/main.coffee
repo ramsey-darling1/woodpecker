@@ -2,15 +2,20 @@
 #@rdarling
 
 $(document).ready(->
+    validate = new ValidateForm
+    message = new Message
+    
     $('#register input[name="username"]').focusout(->
         username = $(this).val()
-        validate = new ValidateForm
         if !validate.correct_length(6,username)
-            message = new Message 
             message.display_message('Sorry, that username is not long enough','warning')
             $(this).addClass('error')
         else
             $(this).removeClass('error')
+            message.remove_message
+    )
+    $('#register input[name="email"]').focusout(->
+        email = $(this).val()
     )
 )
 
@@ -21,3 +26,6 @@ class ValidateForm
 class Message
     display_message: (message,type) ->
         $('.res-message').html("<div data-alert class=\"alert-box #{type} radius\">#{message}<a href=\"#\" class=\"close\">&times;</a></div>")
+
+    remove_message: ->
+        $('.res-message').fadeOut()

@@ -26,6 +26,10 @@ body {
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$white', endColorstr='$pink',GradientType=1 );
 }
 
+input.error {
+    background:$pink; 
+}
+
 #login {
    form {
     margin-top:2rem;
