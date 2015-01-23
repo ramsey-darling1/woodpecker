@@ -40,7 +40,7 @@
                     </div>
                     <div class="row">
                         <div class="small-9 columns small-offset-3">
-                            <button type="button" class="login button radius">login</button> 
+                            <button type="button" class="login button radius">create account</button> 
                             <br /><a href="/index.php">sign in</a>
                         </div>
                     </div>

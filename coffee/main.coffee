@@ -29,3 +29,13 @@ class Message
 
     remove_message: ->
         $('.res-message').fadeOut()
+
+class Register
+    new_account: (account_data) ->
+        $.ajax
+            url: '/api/index.php'
+            type: 'POST'
+            data: {
+                controller: 'account',
+                action: 'new_account'
+            }
