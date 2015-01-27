@@ -13,7 +13,7 @@ class Db {
     public function __construct($collection){
         //start up mondgo driver
         $mongo = new MondoClient();
-        $this->db = $mongo->project_hours;
+        $this->db = $mongo->project_hours;//database name
         $this->set_collection($collection);
     }
 
@@ -37,8 +37,9 @@ class Db {
         return $res;
     }
 
-    public function select(){
-    
+    public function select($id){
+        $dig = $this->collection->findOne(array('_id'=> new MongoId($id))); 
+        return !empty($dig) ? $dig : false;
     }
 
 }
