@@ -27,24 +27,24 @@ class Db {
     }
     
     public function set_staging_db(){
-        $this->name = 'profile';
-        $this->user = 'webprofile';
-        $this->host = 'localhost';
-        $this->pass = 'turkey12345';
+        $this->name = '';
+        $this->user = '';
+        $this->host = '';
+        $this->pass = '';
     }
     
     public function set_dev_db(){
-        $this->name = 'profile';
-        $this->user = 'webprofile';
-        $this->host = '66.184.124.98';
-        $this->pass = 'turkey12345';
+        $this->name = 'scotchbox';
+        $this->user = 'root';
+        $this->host = 'localhost';
+        $this->pass = 'root';
     }
  
     public function set_live_db(){
-        $this->name = 'profile';
-        $this->user = 'webprofile';
-        $this->host = 'localhost';
-        $this->pass = 'mashed.potato';
+        $this->name = '';
+        $this->user = '';
+        $this->host = '';
+        $this->pass = '';
     }
        
     public function re_name(){
