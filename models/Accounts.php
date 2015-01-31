@@ -17,7 +17,7 @@ class Accounts {
     }
 
     public function set_db(){
-        $this->db = new Db('accounts'); 
+        $this->db = new Db(); 
     }
     
     public function login($id){
@@ -33,12 +33,17 @@ class Accounts {
         return isset($_SESSION['logged_in']) ? true : false; 
     }
 
+    public function set_data($data){
+        $this->data = $data; 
+    }
+
     /**
      * New Account
      *
      */
 
     public function new_account($data){
+        $this->set_data($data);
         if($this->valid_new_account_data()){
             $new_account = $this->db->insert();
             $res = !$new_account ? false : true;
@@ -46,5 +51,15 @@ class Accounts {
             $res = false; 
         } 
         return $res;
+    }
+
+    public function valid_new_account_data(){
+        if(empty($this->data['username'])){
+            $res = false; 
+        }elseif(strlen($this->data['username']) < 6 || strlen($this->data['username']) > 25){
+            $res = false; 
+        }elseif(empty($this->data['email'])){
+            $res = false; 
+        } 
     }
 }
