@@ -52,8 +52,8 @@ class Accounts {
                 ':date_created' => time(),
                 ':active' => 1 
             );
-            $new_account = $this->db->insert('accounts',$cols,$vals,$ex_data);
-            if(!empty($new_account)){
+            $new_account = $this->db->insert_re_id('accounts',$cols,$vals,$ex_data);
+            if(!empty($new_account) && strlen($new_account) < 26){
                 //$new_account is a new user ID 
                 $this->login($new_account);//login the new user
                 $res = true;

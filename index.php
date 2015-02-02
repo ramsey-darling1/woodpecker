@@ -23,8 +23,7 @@ case 'register':
     break;
 
 default:
-    $view = $account->is_logged_in() ? 'index' : 'main';
+    $view = !$account->is_logged_in() ? 'index' : 'main';
 }
-
 //include the view
 include_once "views/{$view}.php";

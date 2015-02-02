@@ -6,6 +6,8 @@
  * @rdarling
  *
  */
+session_start();
+
 include_once 'helpers/messages.php';
 include_once 'controllers/accounts.php';
 include_once 'controllers/projects.php';
