@@ -9,6 +9,8 @@ class Accounts {
 
     public $data;
     public $db;
+    public $id;
+    public $user;
 
     public function __construct(){
         $this->set_db(); 
@@ -33,6 +35,10 @@ class Accounts {
 
     public function set_data($data){
         $this->data = $data; 
+    }
+
+    public function set_user($user){
+        $this->user = $user; 
     }
 
     /**
@@ -84,5 +90,49 @@ class Accounts {
             $res = true; 
         } 
         return $res;
+    }
+
+    /**
+     * Login
+     *
+     */
+
+    public function attempt_login($data){
+        if(!empty($data['username']) && !empty($data['password'])){
+            $this->set_data($data); 
+            if(!$this->re_user('username')){
+                $res = false; 
+            }elseif(!$this->check_password()){
+                $res = false; 
+            }else{
+                $this->login($this->id);
+                $res = true; 
+            }
+        }else{
+            $res = false; 
+        }
+        return $res;
+    }
+
+    public function is_valid_username(){
+        //checks username and returns ID if it exists
+        $dig = $this->db->select_specific('id','accounts','username = :username',array(':username'=>$this->data['username'])); 
+        return !empty($dig) ? $this->set_id($dig['id']) : false;
+    }
+
+    public function check_password(){
+        //this method expects that the re_user method has already been called and $this->user contains user data
+        return password_hash($this->data['password'],PASSWORD_DEFAULT) == $this->user['password'] ? true : false;
+    }
+
+    /**
+     * Set User
+     *
+     */
+    
+    public function re_user($key){
+        //will return user data by ID, email, or username
+        $dig = $this->db->select('accounts',"{$key} = :key",array(':key'=>$this->data[$key])); 
+        return !empty($dig) ? $this->set_user($dig[0]) : false;
     }
 }

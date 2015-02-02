@@ -18,7 +18,7 @@
             <nav class="top-bar" data-topbar role="navigation">
                 <section class="top-bar-section">
                     <ul class="">
-                      <li class="active"><a href="#">New Project</a></li>
+                      <li class="active"><a href="/index.php?page=new_project">New Project</a></li>
                       <li><a href="">List Projects</a></li>
                     </ul>
                 </section>

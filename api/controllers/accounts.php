@@ -74,4 +74,10 @@ class AccountsController {
                        $this->set_response('log_in'); 
     }
 
+    public function login(){
+        $this->set_response_type('res'); 
+        $login = $this->account->attempt_login($this->data);
+        return !$login ? $this->set_response('Sorry, wrong username or password') : $this->set_response('log_in');
+    }
+
 }

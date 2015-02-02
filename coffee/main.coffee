@@ -34,6 +34,16 @@ $(document).ready(->
             register = new Register
             register.new_account({email:email,username:username,password:password})
     )
+    #LogIn
+    $('#login button.login').click(->
+        username = $('#login input[name="username"]').val()
+        password = $('#login input[name="password"]').val()
+        if username is '' or password is ''
+            message.display_message('Please fill out both username and password')
+        else
+            login = new Login
+            login.login(username,password)
+    )
 )
 
 #models
@@ -66,6 +76,27 @@ class Register
                 email: account_data['email'],
                 username: account_data['username'],
                 password: account_data['password']
+            },
+            success: (res) ->
+                #res will be a string, "log_in" or an error message string
+                if res is 'log_in'
+                    window.location = '/'
+                else
+                    message = new Message
+                    message.display_message(res,'alert')
+            error: ->
+                message = new Message
+                message.display_message('Sorry, we are not able to connect at the moment','error')
+class Login
+    login: (username,password) ->
+        $.ajax
+            url: '/api/index.php'
+            type: 'POST'
+            data: {
+                controller: 'account',
+                action: 'login',
+                username: username,
+                password: password
             },
             success: (res) ->
                 #res will be a string, "log_in" or an error message string

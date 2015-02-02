@@ -22,6 +22,10 @@ case 'register':
     $view = 'register';
     break;
 
+case 'new_project':
+    $view = !$account->is_logged_in() ? 'index' : 'new_project';
+    break;
+
 default:
     $view = !$account->is_logged_in() ? 'index' : 'main';
 }
