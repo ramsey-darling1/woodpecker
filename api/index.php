@@ -1,19 +1,23 @@
 <?php
 /**
  * Main Controller
+ * here we break up the duties of each controller
+ * into their own objects
  * @rdarling
  *
  */
 include_once 'helpers/messages.php';
 include_once 'controllers/accounts.php';
 include_once 'controllers/projects.php';
-
+include_once '../models/Accounts.php';
+include_once '../models/Projects.php';
+include_once '../models/Db.php';
 
 if(!empty($_POST['controller'])){
     //all post requests specify a controller
     //most posts requests will come through here
     switch($_POST['controller']){
-        case 'accounts': 
+        case 'account': 
             $account_controller = new AccountsController($_POST['action'],$_POST);
             $account_controller->action();
             switch($account_controller->response_type()){

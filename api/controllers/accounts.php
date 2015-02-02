@@ -5,15 +5,12 @@
  *
  */
 
-include_once '../../models/Accounts.php';
-
 class AccountsController {
     
     public $account;
     public $action;
     public $data;
     public $message;
-    public $message_type;
     public $response;
     public $response_type;
 
@@ -41,11 +38,16 @@ class AccountsController {
 
     public function action(){
         //call the method 
+        $action = $this->action;
         return $this->$action();
     }
 
     public function response(){
         return $this->response; 
+    }
+
+    public function response_type(){
+        return $this->response_type; 
     }
 
     public function message(){
@@ -59,20 +61,17 @@ class AccountsController {
     public function set_response($res){
         return $this->response = $res; 
     }
+    
     /**
      * New Account
      *
      */
 
     public function new_account(){
+        $this->set_response_type('res');
         $new = $this->account->new_account($this->data); 
-        if(!$new){
-            $this->set_response_type('message');
-            $this->set_message(array('Sorry, we were not able to create a new account at this time','error'));
-        }else{
-            $this->set_response_type('res');
-            $this->set_response('log_in'); 
-        }
+        return !$new ? $this->set_response('Sorry, we were not able to create a new account at this time') :
+                       $this->set_response('log_in'); 
     }
 
 }

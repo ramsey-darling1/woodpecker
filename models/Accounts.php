@@ -5,8 +5,6 @@
  *
  */
 
-include_once 'Db.php';
-
 class Accounts {
 
     public $data;
@@ -55,7 +53,7 @@ class Accounts {
                 ':active' => 1 
             );
             $new_account = $this->db->insert('accounts',$cols,$vals,$ex_data);
-            if(!empty($new_account) && is_numeric($new_account)){
+            if(!empty($new_account)){
                 //$new_account is a new user ID 
                 $this->login($new_account);//login the new user
                 $res = true;
@@ -82,7 +80,7 @@ class Accounts {
         }elseif(strlen($this->data['password']) < 8){
             $res = false; 
         }else{
-            $this->data['username'] = preg_replace(' ','',$this->data['username']);//remove white space from username
+            $this->data['username'] = preg_replace('/ /','',$this->data['username']);//remove white space from username
             $res = true; 
         } 
         return $res;

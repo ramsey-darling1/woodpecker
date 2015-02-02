@@ -15,7 +15,7 @@ $(document).ready(function() {
       return message.remove_message;
     }
   });
-  return $('#register input[name="email"]').focusout(function() {
+  $('#register input[name="email"]').focusout(function() {
     var email;
     email = $(this).val();
     if (!validate.is_email(email)) {
@@ -24,6 +24,22 @@ $(document).ready(function() {
     } else {
       $(this).removeClass('error');
       return message.remove_message;
+    }
+  });
+  return $('#register button.create-account').click(function() {
+    var email, password, register, username;
+    username = $('#register input[name="username"]').val();
+    email = $('#register input[name="email"]').val();
+    password = $('#register input[name="password"]').val();
+    if (username === '' || email === '' || password === '') {
+      return message.display_message('Sorry, no blank values');
+    } else {
+      register = new Register;
+      return register.new_account({
+        email: email,
+        username: username,
+        password: password
+      });
     }
   });
 });
@@ -81,6 +97,20 @@ Register = (function() {
         email: account_data['email'],
         username: account_data['username'],
         password: account_data['password']
+      },
+      success: function(res) {
+        var message;
+        if (res === 'log_in') {
+          return window.location = '/';
+        } else {
+          message = new Message;
+          return message.display_message(res, 'alert');
+        }
+      },
+      error: function() {
+        var message;
+        message = new Message;
+        return message.display_message('Sorry, we are not able to connect at the moment', 'error');
       }
     });
   };

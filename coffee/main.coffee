@@ -73,7 +73,7 @@ class Register
                     window.location = '/'
                 else
                     message = new Message
-                    message.display_message(res,'error')
+                    message.display_message(res,'alert')
             error: ->
                 message = new Message
                 message.display_message('Sorry, we are not able to connect at the moment','error')

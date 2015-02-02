@@ -10,6 +10,9 @@ session_start();//start the session
 
 //include classes
 include_once 'models/Accounts.php';
+include_once 'models/Projects.php';
+include_once 'models/Db.php';
+
 $account = new Accounts();
 
 //router
@@ -20,9 +23,8 @@ case 'register':
     break;
 
 default:
-    $view = 'index';
+    $view = $account->is_logged_in() ? 'index' : 'main';
 }
-
 
 //include the view
 include_once "views/{$view}.php";
