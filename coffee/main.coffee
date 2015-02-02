@@ -5,6 +5,7 @@ $(document).ready(->
     validate = new ValidateForm
     message = new Message
     
+    #Register Form
     $('#register input[name="username"]').focusout(->
         username = $(this).val()
         if !validate.correct_length(6,username)
@@ -16,12 +17,36 @@ $(document).ready(->
     )
     $('#register input[name="email"]').focusout(->
         email = $(this).val()
+        if !validate.is_email(email)
+            message.display_message('Sorry, that is not a valid email','warning')
+            $(this).addClass('error')
+        else
+            $(this).removeClass('error')
+            message.remove_message
+    )
+    $('#register button.create-account').click(->
+        username = $('#register input[name="username"]').val()
+        email = $('#register input[name="email"]').val()
+        password = $('#register input[name="password"]').val()
+        if username is '' or email is '' or password is ''
+            message.display_message('Sorry, no blank values')
+        else
+            register = new Register
+            register.new_account({email:email,username:username,password:password})
     )
 )
 
+#models
 class ValidateForm
     correct_length: (length,value) ->
         if value.length < length then false else true
+    is_email: (email) ->
+        if email.length < 6 or email.length > 50
+            false
+        else if email.indexOf('@') is -1 or email.indexOf('.') is -1
+            false
+        else
+            true
 
 class Message
     display_message: (message,type) ->
@@ -37,5 +62,18 @@ class Register
             type: 'POST'
             data: {
                 controller: 'account',
-                action: 'new_account'
-            }
+                action: 'new_account',
+                email: account_data['email'],
+                username: account_data['username'],
+                password: account_data['password']
+            },
+            success: (res) ->
+                #res will be a string, "log_in" or an error message string
+                if res is 'log_in'
+                    window.location = '/'
+                else
+                    message = new Message
+                    message.display_message(res,'error')
+            error: ->
+                message = new Message
+                message.display_message('Sorry, we are not able to connect at the moment','error')

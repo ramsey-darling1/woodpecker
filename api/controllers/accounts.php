@@ -53,7 +53,11 @@ class AccountsController {
     }
 
     public function set_message($message){
-        $this->message = $message; 
+        return $this->message = $message; 
+    }
+
+    public function set_response($res){
+        return $this->response = $res; 
     }
     /**
      * New Account
@@ -61,10 +65,14 @@ class AccountsController {
      */
 
     public function new_account(){
-        $this->set_response_type('message');
         $new = $this->account->new_account($this->data); 
-        return !$new ? $this->set_message(array('Sorry, we were not able to create a new account at this time','error')) :
-                       $this->set_message(array('Thanks, account created successfully','success'));
+        if(!$new){
+            $this->set_response_type('message');
+            $this->set_message(array('Sorry, we were not able to create a new account at this time','error'));
+        }else{
+            $this->set_response_type('res');
+            $this->set_response('log_in'); 
+        }
     }
 
 }

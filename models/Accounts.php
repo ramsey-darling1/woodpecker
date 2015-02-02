@@ -45,8 +45,23 @@ class Accounts {
     public function new_account($data){
         $this->set_data($data);
         if($this->valid_new_account_data()){
-            $new_account = $this->db->insert();
-            $res = !$new_account ? false : true;
+            $cols = 'username, email, password, date_created, active';
+            $vals = ':username, :email, :password, :date_created, :active';
+            $ex_data = array(
+                ':username' => trim($this->data['username']),
+                ':email' => trim($this->data['email']),
+                ':password' => password_hash($this->data['password'],PASSWORD_DEFAULT),
+                ':date_created' => time(),
+                ':active' => 1 
+            );
+            $new_account = $this->db->insert('accounts',$cols,$vals,$ex_data);
+            if(!empty($new_account) && is_numeric($new_account)){
+                //$new_account is a new user ID 
+                $this->login($new_account);//login the new user
+                $res = true;
+            }else{
+                $res = false; 
+            }
         }else{
             $res = false; 
         } 
@@ -60,6 +75,16 @@ class Accounts {
             $res = false; 
         }elseif(empty($this->data['email'])){
             $res = false; 
+        }elseif(strpos($this->data['email'],'@') === false || strpos($this->data['email'],'.') === false){
+            $res = false; 
+        }elseif(empty($this->data['password'])){
+            $res = false; 
+        }elseif(strlen($this->data['password']) < 8){
+            $res = false; 
+        }else{
+            $this->data['username'] = preg_replace(' ','',$this->data['username']);//remove white space from username
+            $res = true; 
         } 
+        return $res;
     }
 }

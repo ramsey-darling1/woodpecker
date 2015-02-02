@@ -175,7 +175,7 @@ class Db {
             $qu = "INSERT INTO {$table_name} ({$col_names}) VALUES({$values})";
             $act = $conn->prepare($qu);
             $act->execute($ex_data);
-            $res = $act->rowCount() >= 1 ? $res = $conn->lastInsertId() : false;
+            $res = $act->rowCount() >= 1 ? $conn->lastInsertId() : false;
         }catch(PDOException $e){
             $res = $e;
         }
