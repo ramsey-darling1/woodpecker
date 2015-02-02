@@ -1,4 +1,4 @@
-var Message, Register, ValidateForm;
+var Login, Message, Register, ValidateForm;
 
 $(document).ready(function() {
   var message, validate;
@@ -26,7 +26,7 @@ $(document).ready(function() {
       return message.remove_message;
     }
   });
-  return $('#register button.create-account').click(function() {
+  $('#register button.create-account').click(function() {
     var email, password, register, username;
     username = $('#register input[name="username"]').val();
     email = $('#register input[name="email"]').val();
@@ -40,6 +40,17 @@ $(document).ready(function() {
         username: username,
         password: password
       });
+    }
+  });
+  return $('#login button.login').click(function() {
+    var login, password, username;
+    username = $('#login input[name="username"]').val();
+    password = $('#login input[name="password"]').val();
+    if (username === '' || password === '') {
+      return message.display_message('Please fill out both username and password');
+    } else {
+      login = new Login;
+      return login.login(username, password);
     }
   });
 });
@@ -116,5 +127,39 @@ Register = (function() {
   };
 
   return Register;
+
+})();
+
+Login = (function() {
+  function Login() {}
+
+  Login.prototype.login = function(username, password) {
+    return $.ajax({
+      url: '/api/index.php',
+      type: 'POST',
+      data: {
+        controller: 'account',
+        action: 'login',
+        username: username,
+        password: password
+      },
+      success: function(res) {
+        var message;
+        if (res === 'log_in') {
+          return window.location = '/';
+        } else {
+          message = new Message;
+          return message.display_message(res, 'alert');
+        }
+      },
+      error: function() {
+        var message;
+        message = new Message;
+        return message.display_message('Sorry, we are not able to connect at the moment', 'error');
+      }
+    });
+  };
+
+  return Login;
 
 })();
