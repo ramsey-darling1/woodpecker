@@ -34,6 +34,9 @@ if(!empty($_POST['controller'])){
                     $message = new Message($account_controller->message());
             }
             break;
+        case 'project':
+            break;
+
     }
 
 }elseif(!empty($_GET['controller'])){

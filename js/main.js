@@ -1,4 +1,4 @@
-var Login, Message, Register, ValidateForm;
+var Login, Message, Project, Register, ValidateForm;
 
 $(document).ready(function() {
   var message, validate;
@@ -42,7 +42,7 @@ $(document).ready(function() {
       });
     }
   });
-  return $('#login button.login').click(function() {
+  $('#login button.login').click(function() {
     var login, password, username;
     username = $('#login input[name="username"]').val();
     password = $('#login input[name="password"]').val();
@@ -51,6 +51,17 @@ $(document).ready(function() {
     } else {
       login = new Login;
       return login.login(username, password);
+    }
+  });
+  return $('#new_project button.add-project').click(function() {
+    var description, project, project_name;
+    project_name = $('#new_project input[name="name"]').val();
+    description = $('#new_project textarea[name="description"]').val();
+    if (project_name === '') {
+      return message.display_message('Project must be named');
+    } else {
+      project = new Project;
+      return project.new_project(project_name, description);
     }
   });
 });
@@ -161,5 +172,35 @@ Login = (function() {
   };
 
   return Login;
+
+})();
+
+Project = (function() {
+  function Project() {}
+
+  Project.prototype.new_project = function(project_name, description) {
+    return $.ajax({
+      url: '/api/index.php',
+      type: 'POST',
+      data: {
+        controller: 'project',
+        action: 'new_project',
+        username: project_name,
+        password: description
+      },
+      success: function(res) {
+        var message;
+        message = new Message;
+        return message.display_message(res);
+      },
+      error: function() {
+        var message;
+        message = new Message;
+        return message.display_message('Sorry, we are not able to connect at the moment', 'error');
+      }
+    });
+  };
+
+  return Project;
 
 })();

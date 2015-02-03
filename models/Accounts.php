@@ -41,6 +41,14 @@ class Accounts {
         $this->user = $user; 
     }
 
+    public static function re_static_id(){
+        return isset($_SESSION['logged_in']) ? $_SESSION['logged_in'] : false;
+    }
+
+    public function re_id(){
+        return isset($this->id) ? $this->id : false; 
+    }
+
     /**
      * New Account
      *

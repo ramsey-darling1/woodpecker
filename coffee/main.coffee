@@ -44,6 +44,16 @@ $(document).ready(->
             login = new Login
             login.login(username,password)
     )
+    #New Project
+    $('#new_project button.add-project').click(->
+        project_name = $('#new_project input[name="name"]').val()
+        description = $('#new_project textarea[name="description"]').val()
+        if project_name is ''
+            message.display_message('Project must be named')
+        else
+            project = new Project
+            project.new_project(project_name,description)
+    )
 )
 
 #models
@@ -105,6 +115,23 @@ class Login
                 else
                     message = new Message
                     message.display_message(res,'alert')
+            error: ->
+                message = new Message
+                message.display_message('Sorry, we are not able to connect at the moment','error')
+class Project
+    new_project: (project_name,description) ->
+        $.ajax
+            url: '/api/index.php'
+            type: 'POST'
+            data: {
+                controller: 'project',
+                action: 'new_project',
+                username: project_name,
+                password: description
+            },
+            success: (res) ->
+                message = new Message
+                message.display_message(res)
             error: ->
                 message = new Message
                 message.display_message('Sorry, we are not able to connect at the moment','error')
