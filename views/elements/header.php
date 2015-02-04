@@ -18,8 +18,10 @@
             <nav class="top-bar" data-topbar role="navigation">
                 <section class="top-bar-section">
                     <ul class="">
-                      <li class="active"><a href="/index.php?page=new_project">New Project</a></li>
-                      <li><a href="">List Projects</a></li>
+                      <li><a href="/index.php?page=new_project">New Project</a></li>
+                      <li><a href="/index.php?page=list_projects">List Projects</a></li>
+                      <li><a href="/">View Hours</a></li>
+                      <li><a href="/index.php?page=sign_out">Sign Out</a></li>
                     </ul>
                 </section>
             </nav>

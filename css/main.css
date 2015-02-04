@@ -20,10 +20,20 @@ body {
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$white', endColorstr='$pink',GradientType=1 ); }
 
 input.error {
-  background: #fe2595; }
+  background: #ef017c; }
 
 #login form {
   margin-top: 2rem; }
+
+#list_projects .projects-wrap .row {
+  padding: 2rem;
+  cursor: pointer; }
+  #list_projects .projects-wrap .row:hover {
+    background: #e6e6e6; }
+  #list_projects .projects-wrap .row:nth-child(2n) {
+    background: #ff8ac6; }
+    #list_projects .projects-wrap .row:nth-child(2n):hover {
+      background: #fe58ae; }
 
 footer {
   margin-top: 4rem; }

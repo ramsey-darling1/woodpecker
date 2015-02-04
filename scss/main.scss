@@ -36,6 +36,24 @@ input.error {
    } 
 }
 
+#list_projects {
+    .projects-wrap{
+        .row{
+            padding:2rem;
+            cursor:pointer;
+            &:hover{
+                background: darken($white,10%); 
+            }
+            &:nth-child(2n){
+                background: lighten($pink,30%); 
+                &:hover {
+                    background:lighten($pink,20%); 
+                }
+            } 
+        } 
+    }
+}
+
 footer {
     margin-top:4rem;
 }

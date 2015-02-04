@@ -1,5 +1,4 @@
 <?php include_once 'elements/header.php'; ?>
-<!--this screen the user is not logged in-->
 <div id="new_project" class="row">
     <div class="small-12 columns">
         <h2>new project</h2>

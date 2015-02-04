@@ -117,10 +117,12 @@ class Projects {
        $ids = $this->db->select_specific('project','account_projects','account = :account',array(':account'=>$account),'active = 1');
        if(!empty($ids)){
            foreach($ids as $id){
-                 
+                $dig = $this->db->select('projects',array(':pid'=>$id['project']),'pid = :pid');
+                $projects_list[] = !empty($dig) ? $dig[0] : null;
            } 
+           $res = !empty($projects_list) ? array_filter($projects_list) : false; 
        }else{
-            $res = false; 
+           $res = false; 
        }
        return $res;
     }
