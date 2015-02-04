@@ -185,13 +185,19 @@ Project = (function() {
       data: {
         controller: 'project',
         action: 'new_project',
-        username: project_name,
-        password: description
+        name: project_name,
+        description: description
       },
       success: function(res) {
         var message;
         message = new Message;
-        return message.display_message(res);
+        if (res === 'success') {
+          return message.display_message('Thanks, project successfully created', 'success');
+        } else if (res === 'fail') {
+          return message.display_message('Sorry, we were not able to create your project. It may be a duplicate', 'alert');
+        } else {
+          return message.display_message('Sorry, something unexpected happened', 'warning');
+        }
       },
       error: function() {
         var message;

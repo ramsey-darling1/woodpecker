@@ -140,7 +140,7 @@ class Accounts {
     
     public function re_user($key){
         //will return user data by ID, email, or username
-        $dig = $this->db->select('accounts',"{$key} = :key",array(':key'=>$this->data[$key])); 
+        $dig = $this->db->select('accounts',array(':key'=>$this->data[$key]),"{$key} = :key"); 
         return !empty($dig) ? $this->set_user($dig[0]) : false;
     }
 }

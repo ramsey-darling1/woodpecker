@@ -126,12 +126,17 @@ class Project
             data: {
                 controller: 'project',
                 action: 'new_project',
-                username: project_name,
-                password: description
+                name: project_name,
+                description: description
             },
             success: (res) ->
                 message = new Message
-                message.display_message(res)
+                if res is 'success'
+                    message.display_message('Thanks, project successfully created','success')
+                else if res is 'fail'
+                    message.display_message('Sorry, we were not able to create your project. It may be a duplicate','alert')
+                else
+                    message.display_message('Sorry, something unexpected happened','warning')
             error: ->
                 message = new Message
                 message.display_message('Sorry, we are not able to connect at the moment','error')

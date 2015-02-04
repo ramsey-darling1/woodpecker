@@ -5,7 +5,7 @@
  *
  */
 
-class Projects {
+class ProjectsController {
     
     public $project;
     public $action;
@@ -29,7 +29,7 @@ class Projects {
     }
 
     public function set_model(){
-        return $this->project = new Project(); 
+        return $this->project = new Projects(); 
     }
 
     public function set_response_type($type){
@@ -68,10 +68,9 @@ class Projects {
      */
 
     public function new_project(){
-        $this->set_response_type('message');
+        $this->set_response_type('res');
         $loggedin_id = Accounts::re_static_id();
         $new = $this->project->new_project($this->data,$loggedin_id); 
-        return !$new ? $this->set_response('Sorry, we were not able to create a new project') :
-                       $this->set_response('Thanks, project successfully created');  
+        return !$new ? $this->set_response('fail') : $this->set_response('success');  
     }
 }

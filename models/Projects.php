@@ -38,6 +38,7 @@ class Projects {
      */
 
     public function new_project($data,$account_id){
+        //goes through the steps needed and creates a new project
         $this->set_data($data);
         $this->set_account_id($account_id);
         if($this->validate_project_data()){
@@ -56,6 +57,7 @@ class Projects {
     }
 
     public function insert_project(){
+        //inserts a new project into database, returns project ID
         $cols = 'name, description, date_created, active';
         $vals = ':name, :description, :date_created, :active';
         $ex_data = array(
@@ -65,7 +67,7 @@ class Projects {
             ':active' => 1 
         );
         $in = $this->db->insert_re_id('projects',$cols,$vals,$ex_data); 
-        return !$in ? false : true;
+        return !$in ? false : $in;
     }
 
     public function tie_project_to_account(){
@@ -88,7 +90,8 @@ class Projects {
     }
 
     public function is_duplicate_name(){
-        $dig = $this->db->select('pid','projects','name = :name',array(':name'=>$this->data['name']),'active = 1'); 
+        //checks for duplicat project name, returns true if found
+        $dig = $this->db->select('projects',array(':name'=>$this->data['name']),'name = :name','active = 1'); 
         if(!empty($dig)){
             foreach($dig as $project){
                 $ex_data = array(':account'=>$this->account_id,':project'=>$project['pid']);
@@ -103,5 +106,22 @@ class Projects {
             $res = false; 
         }
         return $res;
+    }
+
+    /**
+     * List Projects
+     *
+     */
+
+    public function re_projects_list($account){
+       $ids = $this->db->select_specific('project','account_projects','account = :account',array(':account'=>$account),'active = 1');
+       if(!empty($ids)){
+           foreach($ids as $id){
+                 
+           } 
+       }else{
+            $res = false; 
+       }
+       return $res;
     }
 }

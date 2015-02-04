@@ -26,6 +26,17 @@ case 'new_project':
     $view = !$account->is_logged_in() ? 'index' : 'new_project';
     break;
 
+case 'list_projects':
+    if($account->is_logged_in()){
+        $project = new Projects();
+        $account_id = Accounts::re_static_id();
+        $projects_list = $project->re_projects_list($account_id);
+        $view = 'list_projects';
+    }else{
+        $view = 'index'; 
+    }
+    break;
+
 default:
     $view = !$account->is_logged_in() ? 'index' : 'main';
 }

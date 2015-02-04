@@ -35,6 +35,19 @@ if(!empty($_POST['controller'])){
             }
             break;
         case 'project':
+            $project_controller = new ProjectsController($_POST['action'],$_POST);
+            $project_controller->action();
+            switch($project_controller->response_type()){
+                case 'header': 
+                    $header = $project_controller->response();
+                    break;
+                case 'res':
+                    $res = $project_controller->response();
+                    break;
+                case 'message':
+                default:
+                    $message = new Message($project_controller->message());
+            }
             break;
 
     }
