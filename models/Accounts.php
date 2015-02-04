@@ -34,11 +34,11 @@ class Accounts {
     }
 
     public function set_data($data){
-        $this->data = $data; 
+        return $this->data = $data; 
     }
 
     public function set_user($user){
-        $this->user = $user; 
+        return $this->user = $user; 
     }
 
     public static function re_static_id(){
@@ -113,7 +113,7 @@ class Accounts {
             }elseif(!$this->check_password()){
                 $res = false; 
             }else{
-                $this->login($this->id);
+                $this->login($this->user['aid']);
                 $res = true; 
             }
         }else{
@@ -130,7 +130,7 @@ class Accounts {
 
     public function check_password(){
         //this method expects that the re_user method has already been called and $this->user contains user data
-        return password_hash($this->data['password'],PASSWORD_DEFAULT) == $this->user['password'] ? true : false;
+        return password_verify($this->data['password'],$this->user['password']);
     }
 
     /**
