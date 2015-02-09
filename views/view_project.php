@@ -1,7 +1,6 @@
 <?php include_once 'elements/header.php'; ?>
 <div id="view_project" class="row">
     <div class="small-12 columns">
-        <h2>view project</h2>
             <div class="row project-wrap"> 
                 <div class="small-8 columns"> 
                     <?php if(!empty($project_data)): ?>

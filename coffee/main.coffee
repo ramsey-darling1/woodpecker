@@ -66,6 +66,13 @@ $(document).ready(->
     #Record Hours
     $('.record-hours').click(->
         pid = $(this).attr('data-pid')
+        amount = $('input[name="hours"]').val()
+        date = $('input[name="date"]').val()
+        if pid is '' or amount is '' or date is ''
+            message.display_message('Please fill in hours and date fields','warning')
+        else
+            hours = new Hours
+            hours.record(pid,amount,date)
     )
 )
 
@@ -109,7 +116,7 @@ class Register
                     message.display_message(res,'alert')
             error: ->
                 message = new Message
-                message.display_message('Sorry, we are not able to connect at the moment','error')
+                message.display_message('Sorry, we are not able to connect at the moment','alert')
 class Login
     login: (username,password) ->
         $.ajax
@@ -130,9 +137,10 @@ class Login
                     message.display_message(res,'alert')
             error: ->
                 message = new Message
-                message.display_message('Sorry, we are not able to connect at the moment','error')
+                message.display_message('Sorry, we are not able to connect at the moment','alert')
 class Project
     new_project: (project_name,description) ->
+        message = new Message
         $.ajax
             url: '/api/index.php'
             type: 'POST'
@@ -143,7 +151,6 @@ class Project
                 description: description
             },
             success: (res) ->
-                message = new Message
                 if res is 'success'
                     message.display_message('Thanks, project successfully created','success')
                 else if res is 'fail'
@@ -151,10 +158,28 @@ class Project
                 else
                     message.display_message('Sorry, something unexpected happened','warning')
             error: ->
-                message = new Message
-                message.display_message('Sorry, we are not able to connect at the moment','error')
+                message.display_message('Sorry, we are not able to connect at the moment','alert')
     view_project: (pid) ->
         window.location = "/index.php?page=view_project&project=#{pid}"
 class Hours
-    record: (pid,amount) ->
-
+    record: (pid,amount,date) ->
+        message = new Message
+        $.ajax
+            url: '/api/index.php'
+            type: 'POST'
+            data: {
+                controller: 'hours',
+                action: 'record_hours',
+                pid: pid,
+                amount: amount,
+                date: date
+            },
+            success: (res) ->
+                if res = 'success'
+                    message.display_message('Thanks, we successfully recorded those hours','success')
+                else if res is 'fail'
+                    message.display_message('Sorry, we were not able to record that time at this time','alert')
+                else
+                    message.display_message('Sorry, something weird happened','warning')
+            error: ->
+                message.display_message('Sorry, there was a network error, those hours were not recorded','alert')

@@ -20,38 +20,27 @@ if(!empty($_POST['controller'])){
     //most posts requests will come through here
     switch($_POST['controller']){
         case 'account': 
-            $account_controller = new AccountsController($_POST['action'],$_POST);
-            $account_controller->action();
-            switch($account_controller->response_type()){
-                case 'header': 
-                    $header = $account_controller->response();
-                    break;
-                case 'res':
-                    $res = $account_controller->response();
-                    break;
-                case 'message':
-                default:
-                    $message = new Message($account_controller->message());
-            }
+            $controller = new AccountsController($_POST['action'],$_POST);
             break;
         case 'project':
-            $project_controller = new ProjectsController($_POST['action'],$_POST);
-            $project_controller->action();
-            switch($project_controller->response_type()){
-                case 'header': 
-                    $header = $project_controller->response();
-                    break;
-                case 'res':
-                    $res = $project_controller->response();
-                    break;
-                case 'message':
-                default:
-                    $message = new Message($project_controller->message());
-            }
+            $controller = new ProjectsController($_POST['action'],$_POST);
             break;
-
+        case 'hours':
+            $controller = new HoursController($_POST['action'],$_POST);
+            break;
     }
-
+    $controller->action();//preform the requested action
+    switch($controller->response_type()){
+        case 'header': 
+            $header = $controller->response();
+            break;
+        case 'res':
+            $res = $controller->response();
+            break;
+        case 'message':
+        default:
+            $message = new Message($controller->message());
+    }
 }elseif(!empty($_GET['controller'])){
     //get requests that require interfacing with a model will come through here 
 }else{
