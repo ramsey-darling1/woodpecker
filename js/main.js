@@ -53,7 +53,7 @@ $(document).ready(function() {
       return login.login(username, password);
     }
   });
-  return $('#new_project button.add-project').click(function() {
+  $('#new_project button.add-project').click(function() {
     var description, project, project_name;
     project_name = $('#new_project input[name="name"]').val();
     description = $('#new_project textarea[name="description"]').val();
@@ -62,6 +62,16 @@ $(document).ready(function() {
     } else {
       project = new Project;
       return project.new_project(project_name, description);
+    }
+  });
+  return $('#list_projects .projects-wrap .row').click(function() {
+    var pid, project;
+    pid = $(this).attr('data-pid');
+    if (pid === '') {
+      return message.display_message('Sorry, there was an error, we can not display that project', 'warning');
+    } else {
+      project = new Project;
+      return project.view_project(pid);
     }
   });
 });
@@ -205,6 +215,10 @@ Project = (function() {
         return message.display_message('Sorry, we are not able to connect at the moment', 'error');
       }
     });
+  };
+
+  Project.prototype.view_project = function(pid) {
+    return window.location = "/index.php?page=view_project&project=" + pid;
   };
 
   return Project;

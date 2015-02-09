@@ -37,6 +37,18 @@ case 'list_projects':
     }
     break;
 
+case 'view_project':
+    if($account->is_logged_in() and !empty($_GET['project'])){
+        $project = new Projects();
+        $project->set_id($_GET['project']); 
+        $project->set_account_id(Accounts::re_static_id());
+        $project_data = $project->is_users_project() ? $project->re_project() : null;
+        $view = 'view_project';
+    }else{
+        $view = 'index'; 
+    }
+    break;
+
 default:
     $view = !$account->is_logged_in() ? 'index' : 'main';
 }

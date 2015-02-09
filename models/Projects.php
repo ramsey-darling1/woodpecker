@@ -126,4 +126,26 @@ class Projects {
        }
        return $res;
     }
+
+    public function re_project($id=null){
+        if(!empty($id)){
+            //if id is passed directly, use that 
+            $this->set_id($id);
+        } 
+        //return project
+        $dig = $this->db->select('projects',array(':pid'=>$this->id),'pid = :pid');
+        return !empty($dig) ? $dig[0] : false;
+    }
+
+    public function is_users_project(){
+        $project_list = $this->re_projects_list($this->account_id); 
+        if(!empty($project_list)){
+            foreach($project_list as $project){
+                if($project['pid'] == $this->id){
+                    $yes = true; 
+                } 
+            }
+        }
+        return isset($yes) ? true : false;
+    }
 }

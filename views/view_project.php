@@ -23,7 +23,7 @@
                             <label for="date" class="right inline">Date</label> 
                         </div> 
                         <div class="small-9 columns"> 
-                            <input type="text" name="date" placeholder="date" required/> 
+                            <input type="text" name="date" class="fdatepicker" placeholder="date" required/> 
                         </div> 
                     </div> 
                     <div class="row"> 

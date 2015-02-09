@@ -6,7 +6,7 @@
                 <div class="small-8 columns"> 
                     <?php if(!empty($projects_list)): ?>
                     <?php foreach($projects_list as $project): ?>
-                    <div class="row"> 
+                    <div class="row" data-pid="<?php echo !empty($project['pid']) ? $project['pid'] : null; ?>"> 
                         <div class="small-3 columns"> 
                         <h3><?php echo !empty($project['name']) ? $project['name'] : 'N/A'; ?></h3>
                         </div> 

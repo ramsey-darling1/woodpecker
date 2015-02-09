@@ -54,6 +54,19 @@ $(document).ready(->
             project = new Project
             project.new_project(project_name,description)
     )
+    #View Project
+    $('#list_projects .projects-wrap .row').click(->
+        pid = $(this).attr('data-pid')
+        if pid is ''
+            message.display_message('Sorry, there was an error, we can not display that project','warning')
+        else
+            project = new Project
+            project.view_project(pid)
+    )
+    #Record Hours
+    $('.record-hours').click(->
+        pid = $(this).attr('data-pid')
+    )
 )
 
 #models
@@ -140,3 +153,8 @@ class Project
             error: ->
                 message = new Message
                 message.display_message('Sorry, we are not able to connect at the moment','error')
+    view_project: (pid) ->
+        window.location = "/index.php?page=view_project&project=#{pid}"
+class Hours
+    record: (pid,amount) ->
+
