@@ -3,8 +3,9 @@
 <head>
 <title>Project Hours</title>
 <link rel="stylesheet" href="/bower_components/foundation/css/foundation.css">
+<link rel="stylesheet" href="/bower_components/foundation-datepicker/stylesheets/foundation-datepicker.css">
 <link rel="stylesheet" href="/css/main.css">
-<script src="js/vendor/modernizr.js"></script>
+<script src="/bower_components/foundation/js/vendor/modernizr.js"></script>
 </head>
 <body>
 <header>
