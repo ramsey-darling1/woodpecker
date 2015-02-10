@@ -175,7 +175,7 @@ class Hours
                 date: date
             },
             success: (res) ->
-                if res = 'success'
+                if res is 'success'
                     message.display_message('Thanks, we successfully recorded those hours','success')
                 else if res is 'fail'
                     message.display_message('Sorry, we were not able to record that time at this time','alert')

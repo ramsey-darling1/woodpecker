@@ -75,6 +75,6 @@ class HoursController {
     public function record_hours(){
         $this->set_response_type('res');
         $save = $this->hours->record($this->data); 
-        return !$new ? $this->set_response('fail') : $this->set_response('success');  
+        return !$save ? $this->set_response('fail') : $this->set_response('success');  
     }
 }

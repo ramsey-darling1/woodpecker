@@ -48,11 +48,11 @@ class Hours {
             ':end_time' => ''
         );
         $in = $this->db->insert_re_id('hours',$cols,$vals,$ex_data); 
-        return !$in ? false : $in;
+        return empty($in) ? false : true;
     }
 
     public function validate_data(){
-        if(empty($this->data['project']) || empty($this->data['date']) || empty($this->data['amount'])){
+        if(empty($this->data['pid']) || empty($this->data['date']) || empty($this->data['amount'])){
             $res = false; 
         }elseif(!strtotime($this->data['date'])){
             $res = false; 

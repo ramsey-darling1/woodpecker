@@ -11,8 +11,10 @@ session_start();
 include_once 'helpers/messages.php';
 include_once 'controllers/accounts.php';
 include_once 'controllers/projects.php';
+include_once 'controllers/hours.php';
 include_once '../models/Accounts.php';
 include_once '../models/Projects.php';
+include_once '../models/Hours.php';
 include_once '../models/Db.php';
 
 if(!empty($_POST['controller'])){

@@ -1,4 +1,4 @@
-var Login, Message, Project, Register, ValidateForm;
+var Hours, Login, Message, Project, Register, ValidateForm;
 
 $(document).ready(function() {
   var message, validate;
@@ -64,7 +64,7 @@ $(document).ready(function() {
       return project.new_project(project_name, description);
     }
   });
-  return $('#list_projects .projects-wrap .row').click(function() {
+  $('#list_projects .projects-wrap .row').click(function() {
     var pid, project;
     pid = $(this).attr('data-pid');
     if (pid === '') {
@@ -72,6 +72,18 @@ $(document).ready(function() {
     } else {
       project = new Project;
       return project.view_project(pid);
+    }
+  });
+  return $('.record-hours').click(function() {
+    var amount, date, hours, pid;
+    pid = $(this).attr('data-pid');
+    amount = $('input[name="hours"]').val();
+    date = $('input[name="date"]').val();
+    if (pid === '' || amount === '' || date === '') {
+      return message.display_message('Please fill in hours and date fields', 'warning');
+    } else {
+      hours = new Hours;
+      return hours.record(pid, amount, date);
     }
   });
 });
@@ -142,7 +154,7 @@ Register = (function() {
       error: function() {
         var message;
         message = new Message;
-        return message.display_message('Sorry, we are not able to connect at the moment', 'error');
+        return message.display_message('Sorry, we are not able to connect at the moment', 'alert');
       }
     });
   };
@@ -176,7 +188,7 @@ Login = (function() {
       error: function() {
         var message;
         message = new Message;
-        return message.display_message('Sorry, we are not able to connect at the moment', 'error');
+        return message.display_message('Sorry, we are not able to connect at the moment', 'alert');
       }
     });
   };
@@ -189,6 +201,8 @@ Project = (function() {
   function Project() {}
 
   Project.prototype.new_project = function(project_name, description) {
+    var message;
+    message = new Message;
     return $.ajax({
       url: '/api/index.php',
       type: 'POST',
@@ -199,8 +213,6 @@ Project = (function() {
         description: description
       },
       success: function(res) {
-        var message;
-        message = new Message;
         if (res === 'success') {
           return message.display_message('Thanks, project successfully created', 'success');
         } else if (res === 'fail') {
@@ -210,9 +222,7 @@ Project = (function() {
         }
       },
       error: function() {
-        var message;
-        message = new Message;
-        return message.display_message('Sorry, we are not able to connect at the moment', 'error');
+        return message.display_message('Sorry, we are not able to connect at the moment', 'alert');
       }
     });
   };
@@ -222,5 +232,40 @@ Project = (function() {
   };
 
   return Project;
+
+})();
+
+Hours = (function() {
+  function Hours() {}
+
+  Hours.prototype.record = function(pid, amount, date) {
+    var message;
+    message = new Message;
+    return $.ajax({
+      url: '/api/index.php',
+      type: 'POST',
+      data: {
+        controller: 'hours',
+        action: 'record_hours',
+        pid: pid,
+        amount: amount,
+        date: date
+      },
+      success: function(res) {
+        if (res === 'success') {
+          return message.display_message('Thanks, we successfully recorded those hours', 'success');
+        } else if (res === 'fail') {
+          return message.display_message('Sorry, we were not able to record that time at this time', 'alert');
+        } else {
+          return message.display_message('Sorry, something weird happened', 'warning');
+        }
+      },
+      error: function() {
+        return message.display_message('Sorry, there was a network error, those hours were not recorded', 'alert');
+      }
+    });
+  };
+
+  return Hours;
 
 })();

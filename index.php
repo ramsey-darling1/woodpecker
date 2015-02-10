@@ -11,6 +11,7 @@ session_start();//start the session
 //include classes
 include_once 'models/Accounts.php';
 include_once 'models/Projects.php';
+include_once 'models/Hours.php';
 include_once 'models/Db.php';
 
 $account = new Accounts();
@@ -40,9 +41,11 @@ case 'list_projects':
 case 'view_project':
     if($account->is_logged_in() and !empty($_GET['project'])){
         $project = new Projects();
+        $hours = new Hours();
         $project->set_id($_GET['project']); 
         $project->set_account_id(Accounts::re_static_id());
         $project_data = $project->is_users_project() ? $project->re_project() : null;
+        $project_hours = $hours->re_project_hours($_GET['project']);
         $view = 'view_project';
     }else{
         $view = 'index'; 
