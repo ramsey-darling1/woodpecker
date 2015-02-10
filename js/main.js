@@ -83,7 +83,8 @@ $(document).ready(function() {
       return message.display_message('Please fill in hours and date fields', 'warning');
     } else {
       hours = new Hours;
-      return hours.record(pid, amount, date);
+      hours.record(pid, amount, date);
+      return hours.load(pid);
     }
   });
 });
@@ -262,6 +263,24 @@ Hours = (function() {
       },
       error: function() {
         return message.display_message('Sorry, there was a network error, those hours were not recorded', 'alert');
+      }
+    });
+  };
+
+  Hours.prototype.load = function(pid) {
+    return $.ajax({
+      url: '/api/index.php',
+      type: 'GET',
+      data: {
+        controller: 'hours',
+        action: 'load_hours',
+        pid: pid
+      },
+      success: function(res) {
+        return $('.project-hours-wrap').html(res);
+      },
+      error: function() {
+        return $('.project-hours-wrap').html('Please refresh the page');
       }
     });
   };

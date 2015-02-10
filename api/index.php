@@ -45,8 +45,32 @@ if(!empty($_POST['controller'])){
     }
 }elseif(!empty($_GET['controller'])){
     //get requests that require interfacing with a model will come through here 
+    switch($_GET['controller']){
+        case 'account': 
+            $controller = new AccountsController($_GET['action'],$_GET);
+            break;
+        case 'project':
+            $controller = new ProjectsController($_GET['action'],$_GET);
+            break;
+        case 'hours':
+            $controller = new HoursController($_GET['action'],$_GET);
+            break;
+    }
+    $controller->action();//preform the requested action
+    switch($controller->response_type()){
+        case 'header': 
+            $header = $controller->response();
+            break;
+        case 'res':
+            $res = $controller->response();
+            break;
+        case 'message':
+        default:
+            $message = new Message($controller->message());
+    }
 }else{
     //invalid request
+    $message = new Message(array('Sorry, that is an invalid request','warning'));
 }
 
 //response

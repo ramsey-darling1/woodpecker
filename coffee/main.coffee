@@ -73,6 +73,7 @@ $(document).ready(->
         else
             hours = new Hours
             hours.record(pid,amount,date)
+            hours.load(pid)
     )
 )
 
@@ -183,3 +184,16 @@ class Hours
                     message.display_message('Sorry, something weird happened','warning')
             error: ->
                 message.display_message('Sorry, there was a network error, those hours were not recorded','alert')
+    load: (pid) ->
+        $.ajax
+            url: '/api/index.php'
+            type: 'GET'
+            data: {
+                controller: 'hours',
+                action: 'load_hours',
+                pid: pid
+            },
+            success: (res) ->
+                $('.project-hours-wrap').html(res)
+            error: ->
+                $('.project-hours-wrap').html('Please refresh the page')
