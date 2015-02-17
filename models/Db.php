@@ -11,8 +11,9 @@ class Db {
     private $user;
     private $host;
     private $pass;
+    private $port;
     
-    public function __construct($env='dev'){
+    public function __construct($env='staging'){
         switch($env){            
             case 'dev':
                 $this->set_dev_db();
@@ -31,6 +32,7 @@ class Db {
         $this->user = '';
         $this->host = '';
         $this->pass = '';
+        $this->port = '';
     }
     
     public function set_dev_db(){
@@ -38,6 +40,7 @@ class Db {
         $this->user = 'root';
         $this->host = 'localhost';
         $this->pass = 'root';
+        $this->port = '3306';
     }
  
     public function set_live_db(){
@@ -45,6 +48,7 @@ class Db {
         $this->user = '';
         $this->host = '';
         $this->pass = '';
+        $this->port = '';
     }
        
     public function re_name(){
@@ -66,7 +70,7 @@ class Db {
     public function query($query,$ex_data=null){
         //most generic query. just takes in an sql query
         try{
-            $conn = new PDO('mysql:host='.$this->host.';dbname='.$this->name,$this->user,$this->pass);
+            $conn = new PDO('mysql:host='.$this->host.';port='.$this->port.';dbname='.$this->name,$this->user,$this->pass);
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); //set error mode to fetch error messages
             $qu = $query;
             $act = $conn->prepare($qu);
@@ -81,7 +85,7 @@ class Db {
     public function select($table_name, $ex_data = null, $where = null, $and = null){
         //database helper method to get stuff out of the db
         try{
-            $conn = new PDO('mysql:host='.$this->host.';dbname='.$this->name,$this->user,$this->pass);
+            $conn = new PDO('mysql:host='.$this->host.';port='.$this->port.';dbname='.$this->name,$this->user,$this->pass);
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); //set error mode to fetch error messages
             $qu = "SELECT * FROM {$table_name}";
             if($where != null){
@@ -104,7 +108,7 @@ class Db {
         //database helper method to get stuff out of the db
         //allows for particular columns to be selected.
         try{
-            $conn = new PDO('mysql:host='.$this->host.';dbname='.$this->name,$this->user,$this->pass);
+            $conn = new PDO('mysql:host='.$this->host.';port='.$this->port.';dbname='.$this->name,$this->user,$this->pass);
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); //set error mode to fetch error messages
             $qu = "SELECT {$col_name} FROM {$table_name}";
             if($where != null){
@@ -125,7 +129,7 @@ class Db {
     public function insert($table_name,$col_names,$values,$ex_data){
         //database helper method, controls inserts
         try {
-            $conn = new PDO('mysql:host='.$this->host.';dbname='.$this->name,$this->user,$this->pass);
+            $conn = new PDO('mysql:host='.$this->host.';port='.$this->port.';dbname='.$this->name,$this->user,$this->pass);
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $qu = "INSERT INTO {$table_name} ({$col_names}) VALUES({$values})";
             $act = $conn->prepare($qu);
@@ -140,7 +144,7 @@ class Db {
     public function update($table_name,$new_values,$where,$ex_data){
         //database helper method, controls updates
         try{
-            $conn = new PDO('mysql:host='.$this->host.';dbname='.$this->name,$this->user,$this->pass);
+            $conn = new PDO('mysql:host='.$this->host.';port='.$this->port.';dbname='.$this->name,$this->user,$this->pass);
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $qu = "UPDATE {$table_name} SET {$new_values} WHERE {$where}";
             $act = $conn->prepare($qu);
@@ -155,7 +159,7 @@ class Db {
     public function delete($table_name,$where,$ex_data){
         //this method will delete a row from the database
         try{
-            $conn = new PDO('mysql:host='.$this->host.';dbname='.$this->name,$this->user,$this->pass);
+            $conn = new PDO('mysql:host='.$this->host.';port='.$this->port.';dbname='.$this->name,$this->user,$this->pass);
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $qu = "DELETE FROM {$table_name} WHERE {$where}";
             $act = $conn->prepare($qu);
@@ -170,7 +174,7 @@ class Db {
     public function insert_re_id($table_name,$col_names,$values,$ex_data){
         //database helper method, controls inserts
         try {
-            $conn = new PDO('mysql:host='.$this->host.';dbname='.$this->name,$this->user,$this->pass);
+            $conn = new PDO('mysql:host='.$this->host.';port='.$this->port.';dbname='.$this->name,$this->user,$this->pass);
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $qu = "INSERT INTO {$table_name} ({$col_names}) VALUES({$values})";
             $act = $conn->prepare($qu);
@@ -184,7 +188,7 @@ class Db {
     
     public function select_order_by($table_name, $orderby, $sort, $limit=null){
         try{
-            $conn = new PDO('mysql:host='.$this->host.';dbname='.$this->name,$this->user,$this->pass);
+            $conn = new PDO('mysql:host='.$this->host.';port='.$this->port.';dbname='.$this->name,$this->user,$this->pass);
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); //set error mode to fetch error messages
             $qu = "SELECT * FROM {$table_name} ORDER BY {$orderby} {$sort}";
             if(isset($limit)){
@@ -203,7 +207,7 @@ class Db {
     public function select_where_order_by($table_name, $where, $orderby, $ex_data, $sort=null, $limit=null){
         //database helper method to get stuff out of the db
         try{
-            $conn = new PDO('mysql:host='.$this->host.';dbname='.$this->name,$this->user,$this->pass);
+            $conn = new PDO('mysql:host='.$this->host.';port='.$this->port.';dbname='.$this->name,$this->user,$this->pass);
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); //set error mode to fetch error messages
             $qu = "SELECT * FROM {$table_name} WHERE {$where} ORDER BY {$orderby}";
             if (isset($sort)) {
@@ -224,7 +228,7 @@ class Db {
     public function select_sum($col_name, $table_name, $where = null, $ex_data = null, $and = null){
         //returns the sum of 1 column
         try{
-            $conn = new PDO('mysql:host='.$this->host.';dbname='.$this->name,$this->user,$this->pass);
+            $conn = new PDO('mysql:host='.$this->host.';port='.$this->port.';dbname='.$this->name,$this->user,$this->pass);
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); //set error mode to fetch error messages
             $qu = "SELECT sum({$col_name}) FROM {$table_name}";
             if($where != null){
